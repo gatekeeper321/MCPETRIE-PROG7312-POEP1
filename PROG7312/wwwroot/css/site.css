@@ -1,0 +1,189 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) 
+{
+  html 
+  {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus 
+{
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html 
+{
+  position: relative;
+  min-height: 100%;
+}
+
+body 
+{
+  margin-bottom: 60px;
+}
+
+.navbar 
+{
+    background-color: rgba(255,255,255,0.3);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand img
+{
+    border: 2px solid transparent;
+    border-radius: 40px;
+}
+
+.site-background 
+{
+    background: url(/img/PROGBACKGROUND.jpg) center bottom fixed;
+    background-size: cover;
+}
+
+.nav-item 
+{
+
+}
+
+/* #region card */
+
+.cardbox 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 90px;
+}
+
+.cardboxhzntl {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 90px;
+    gap: 2%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    width: 60%;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+    .card textarea 
+    {
+        border-radius: 10px;
+        width: 80%;
+        height: 200px;
+        padding: 10px;
+    }
+
+    .card input 
+    {
+        margin-top: 5px;
+        border-radius: 10px;
+        padding: 10px;
+        width: 80%;
+    }
+
+    .card select 
+    {
+        margin-top: 5px;
+        border-radius: 10px;
+        padding: 10px;
+        width: 80%;
+    }
+
+    .card button 
+    {
+        background-color: black;
+        color: white;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        padding: 10px;
+        width: 40%;
+    }
+
+    .card p {
+        justify-content: center;
+        align-items: center;
+    }
+
+/* #endregion */
+
+.divider 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    gap: 5%;
+}
+
+    .divider input 
+    {
+        margin-top: 5px;
+        border-radius: 10px;
+        padding: 10px;
+        width: 47.5%;
+        margin-bottom: 15px;
+    }
+
+    .divider label 
+    {
+        border-radius: 10px;
+        width: 47.5%;
+    }
+
+    .divider img {
+        border-radius: 10px;
+        width: 150px;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        margin-top: 0px;
+    }
+
+    .divider p {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+.form 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .form input 
+    {
+        margin-top: 5px;
+        border-radius: 10px;
+        padding: 10px;
+        width: 80%;
+    }
+
+footer 
+{
+    background-color: rgba(255,255,255,0.3);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    position: fixed;
+}
