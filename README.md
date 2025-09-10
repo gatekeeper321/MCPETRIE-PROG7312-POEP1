@@ -15,3 +15,6 @@
 ## References
 individual copilot chat cannot be linked according to copilot.
 GitHub Copilot (2024) Chat-based programming assistance. Microsoft, Visual Studio IDE. Available at: https://copilot.microsoft.com/ (Accessed: [10 September 2025])
+
+## Youtube:
+https://youtu.be/HpIpT7JOqow
