@@ -47,7 +47,7 @@ namespace PROG7312.Services
                 Tail = newNode;
             }
 
-            Console.WriteLine("New report added: " + newNode.FirstName + " " + newNode.LastName);
+            Console.WriteLine("New report added: " + newNode.FirstName + " " + newNode.LastName + " " + newNode.Category + " " + newNode.Location + " " + newNode.Description);
         }
     }
 }
