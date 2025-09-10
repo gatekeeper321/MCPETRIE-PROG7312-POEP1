@@ -8,7 +8,7 @@ namespace PROG7312.Controllers
     public class ReportIssuesController : Controller
     {
         private readonly ILogger<ReportIssuesController> _logger;
-        private static ReportLinkedList reportField = new ReportLinkedList();
+        private static ReportLinkedList reportField = new ReportLinkedList(); //linked list to store data/nodes
 
         public ReportIssuesController(ILogger<ReportIssuesController> logger)
         {
@@ -29,10 +29,10 @@ namespace PROG7312.Controllers
         [HttpPost]
         public IActionResult SubmitReport(string FirstName, string LastName, string Category, string Location, string Description, IFormFile reportImage) 
         {
-            ReportNode newReport = new ReportNode(FirstName, LastName, Category, Location, Description, reportImage);
-            reportField.Add(newReport);
+            ReportNode newReport = new ReportNode(FirstName, LastName, Category, Location, Description, reportImage); //creaeting new node with inputed data
+            reportField.Add(newReport); //adding the node to linked list
 
-            return View("ReportIssues");
+            return View("ReportIssues"); //return back to report issue page
         }
     }
 }

@@ -52,7 +52,7 @@ body
 
 /* #region card */
 
-.cardbox 
+.cardbox /*vertical(column) container for cards*/ 
 {
     display: flex;
     flex-direction: column;
@@ -68,7 +68,7 @@ body
     gap: 2%;
 }
 
-.card {
+.card { /* card to display anything from welcome page block to form for report */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,7 +125,7 @@ body
 
 /* #endregion */
 
-.divider 
+.divider /*used for horizontal seperation of components*/
 {
     display: flex;
     flex-direction: row;

@@ -10,7 +10,7 @@ namespace PROG7312.Services
         public string Location { get; set; }
         public string Description { get; set; }
         public IFormFile ReportImage { get; set; }
-        public ReportNode Next { get; set; }
+        public ReportNode Next { get; set; } // Next points to the next node in the list, allowing for the lists to be linked together via nodes instead of with indexes
 
         public ReportNode(string firstName, string lastName, string category, string location, string description, IFormFile reportImage)
         {
@@ -28,26 +28,26 @@ namespace PROG7312.Services
     {
         public ReportNode Head { get; set; }
         public ReportNode Tail { get; set; }
-        public ReportLinkedList()
+        public ReportLinkedList() //constructor to initialize empty linked list
         {
             Head = null;
             Tail = null;
         }
 
-        public void Add(ReportNode newNode)
+        public void Add(ReportNode newNode) //adding a node to the linked list
         {
-            if (Head == null)
+            if (Head == null) //checking if list is empty
             {
-                Head = newNode;
+                Head = newNode; 
                 Tail = newNode;
             }
             else
             {
-                Tail.Next = newNode;
-                Tail = newNode;
+                Tail.Next = newNode; //linking the new node to end of list
+                Tail = newNode; //making the new node the tail
             }
 
-            Console.WriteLine("New report added: " + newNode.FirstName + " " + newNode.LastName + " " + newNode.Category + " " + newNode.Location + " " + newNode.Description);
+            Console.WriteLine("New report added: " + newNode.FirstName + " " + newNode.LastName + " " + newNode.Category + " " + newNode.Location + " " + newNode.Description); //console msg to verify data has been added to linked list
         }
     }
 }
