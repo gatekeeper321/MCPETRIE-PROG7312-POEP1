@@ -69,9 +69,11 @@ namespace PROG7312.Services
 
             Announcements.Add("A00001", new Announcement { Id = "A00001", Name = "Two Oceans Marathon Road Closure", Date = new DateTime(2025, 11, 25, 9, 30, 00), Location = "Helen Suezman Boulevard", Description = "The Two Oceans Marathon will be taking place on November 25th, so please expect road closures throughout Cape Town. Particularly Helen Suezman Boulevard", Author = "Director of CTTD", Priority = 3 });
             Announcements.Add("A00002", new Announcement { Id = "A00002", Name = "Protesting", Date = new DateTime(2025, 11, 2, 9, 00, 00), Location = "Throughout Cape Town CBD", Description = "We have been informed of a string of peaceful protests that will occur through the Cape Town CBD on November 2nd. Please remember this for your travels as several loads may close due to this.", Author = "Mayor Geordan Hill-Lewis", Priority = 4 });
+            Announcements.Add("A00003", new Announcement { Id = "A00003", Name = "Road works", Date = new DateTime(2025, 11, 3, 9, 00, 00), Location = "Helen Suezman Boulevard", Description = "Roadworks will be performed on this date as potholes have become dangerous.", Author = "Director of CTTD", Priority = 4 });
+
 
             ///////////////////////////////////////////////////////////////////////
-            
+
             //adding categoriees to hash set, this will be automated in part 3 when certain users can add events
             Categories.Add("Gaming");
             Categories.Add("Charity");
@@ -134,7 +136,7 @@ namespace PROG7312.Services
             }
             else
             {
-                return new List<Event>();
+                return new List<Event>(); // returns empty list if no events found with that category
             }
         }
 
@@ -152,7 +154,8 @@ namespace PROG7312.Services
             var RecDat = DatCount.OrderByDescending(c => c.Value).Select(c => c.Key).FirstOrDefault(); //ordering by most serached to least searched and selecting most searched date
             var dateOnly = DateTime.Parse(RecDat).Date;
 
-            int CategoryCount = CatCount.OrderByDescending(c => c.Value).Select(c => c.Value).FirstOrDefault(); ;
+            // getting counts of each to compare which one was searched more
+            int CategoryCount = CatCount.OrderByDescending(c => c.Value).Select(c => c.Value).FirstOrDefault();
             int DateCount = DatCount.OrderByDescending(c => c.Value).Select(c => c.Value).FirstOrDefault();
 
             if (CategoryCount >= DateCount)
