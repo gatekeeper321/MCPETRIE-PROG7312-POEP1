@@ -1,0 +1,39 @@
+﻿@using PROG7312.Services
+@model List<EAService.Event>
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="cardbox">
+
+    <div class="card w-100">
+        <h3>Search Events</h3>
+    </div>
+    
+    <div class="cardboxhzntl w-100 mt-0">
+        <form action="SubmitCategory" method="post" class="card w-80">
+            <h6>Search By Catergory</h6>
+            <input type="text" name="searched" placeholder="Concert" />
+            <button type="submit">Search</button>
+        </form>
+
+        <form action="SubmitDate" method="post" class="card w-80">
+            <h6>Search By Date</h6>
+            <input type="date" name="searched" placeholder="Search date" />
+            <button type="submit">Search</button>
+        </form>
+    </div>         
+
+    
+
+    @foreach (var e in Model)
+    {
+        <div class="cardlink w-40" onclick="window.location.href='/LocalEvents/EventView?Id=@e.Id'">
+            <h5>@e.Name</h5>
+            <p>Location: @e.Location</p>
+            <p>Date: @e.Date.ToString("dd MMM yyyy HH:mm")</p>
+            <p>Price: R @e.AdmissionFee</p>
+        </div>
+    }
+
+</div>

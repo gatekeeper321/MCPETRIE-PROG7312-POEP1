@@ -126,7 +126,7 @@ body
 /* #endregion */
 
 /* #region cardlink */
-.cardlink { /* card to display anything from welcome page block to form for report */
+.cardlink {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,6 +187,20 @@ body
     }
 /* #endregion */
 
+.cardSearch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    width: 60%;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
 .divider /*used for horizontal seperation of components*/
 {
     display: flex;
@@ -234,8 +248,7 @@ body
     justify-content: center;
 }
 
-    .form input 
-    {
+    .form input {
         margin-top: 5px;
         border-radius: 10px;
         padding: 10px;

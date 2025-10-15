@@ -10,6 +10,7 @@ namespace PROG7312.Services
         public Dictionary<string, Event> Events { get; set; } = new Dictionary<string, Event>();
         public Stack<string> RecentlyViewed { get; set; } = new Stack<string>(); // stack to store recently viewed events
         HashSet<string> Categories = new HashSet<string>(); // hashset to store categories of events
+        HashSet<DateTime> Dates = new HashSet<DateTime>(); // hashset to store dates of events
 
         public Dictionary<string, Announcement> Announcements { get; set; } = new Dictionary<string, Announcement>();
         public PriorityQueue<Announcement, int> AnnQueue { get; set; } = new PriorityQueue<Announcement, int>(); // priority queue to sort announcements using their priority so higher priority announcements will be shown first to users (not used but i have left it in just in case i want to use it in part 3)
@@ -23,7 +24,7 @@ namespace PROG7312.Services
             public string Location { get; set; }
             public string Description { get; set; }
             public string Author { get; set; }
-            public int Priority { get; set; } // this will be used to sort announcements in a priority queue 
+            public int Priority { get; set; }
 
         }
 
@@ -31,7 +32,7 @@ namespace PROG7312.Services
         {
             public string Id { get; set; }
             public string Name { get; set; }
-            public DateTime Date { get; set; } //this will be used to sort events in a priority queue
+            public DateTime Date { get; set; }
             public string Location { get; set; }
             public string Category { get; set; }
             public string Description { get; set; }
@@ -67,10 +68,50 @@ namespace PROG7312.Services
             Categories.Add("Racing");
             Categories.Add("Outdoors");
 
+            Dates.Add(new DateTime(2025, 10, 15).Date);
+            Dates.Add(new DateTime(2025, 10, 29).Date);
+            Dates.Add(new DateTime(2025, 12, 23).Date);
+            Dates.Add(new DateTime(2027, 1, 8).Date);
+            Dates.Add(new DateTime(2026, 3, 16).Date);
+            Dates.Add(new DateTime(2025, 12, 1).Date);
+            Dates.Add(new DateTime(2026, 1, 12).Date);
+            Dates.Add(new DateTime(2025, 11, 9).Date);
+            Dates.Add(new DateTime(2025, 12, 22).Date);
+            Dates.Add(new DateTime(2025, 10, 17).Date);
+            Dates.Add(new DateTime(2025, 11, 15).Date);
+            Dates.Add(new DateTime(2026, 2, 17).Date);
+
             AnnQueue.Enqueue(Announcements["A00001"], Announcements["A00001"].Priority);
             AnnQueue.Enqueue(Announcements["A00002"], Announcements["A00002"].Priority);
         }
 
-        
+        public List<Event> CategorySearch(string searched)
+        {
+            if (Categories.Contains(searched))
+            {
+                return (Events.Values.Where(e => e.Category == searched).ToList());
+            }
+            else
+            {
+                return new List<Event>();
+            }
+        }
+
+        public List<Event> DateSearch(string searched)
+        {
+            var dateOnly = DateTime.Parse(searched).Date; //converting to date only as its impractical to search by exact time as well
+
+            if (Dates.Contains(dateOnly))
+            {
+                return (Events.Values.Where(e => e.Date.Date == dateOnly).ToList()); // DateTime is also made into date only for comparison to string searched
+            }
+            else
+            {
+                return new List<Event>();
+            }
+        }
+
+
+
     }
 }

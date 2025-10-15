@@ -32,14 +32,9 @@ namespace PROG7312.Controllers
             return View(e);
         }
 
-        public IActionResult CreateEvent()
+        public IActionResult EventSearch()
         {
-            return View();
-        }
-
-        public IActionResult CreateAnnouncement()
-        {
-            return View();
+            return View(new List<EAService.Event>());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -59,6 +54,18 @@ namespace PROG7312.Controllers
         {
             //add logic
             return View("LocalEventsAndAnnouncements");
+        }
+
+        [HttpPost]
+        public IActionResult SubmitCategory(string searched)
+        {
+            return View("EventSearch", _eaService.CategorySearch(searched));
+        }
+
+        [HttpPost]
+        public IActionResult SubmitDate(string searched)
+        {
+            return View("EventSearch", _eaService.DateSearch(searched));
         }
     }
 }
