@@ -37,23 +37,15 @@ namespace PROG7312.Controllers
             return View(new List<EAService.Event>());
         }
 
+        public IActionResult Recommended()
+        {
+            return View(_eaService.Recommendations());
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpPost]
-        public IActionResult AddEvent(string name, DateTime date, string location, string description, double admissionFee, string author) 
-        {
-            //add logic
-            return View("LocalEventsAndAnnouncements");
-        }
-
-        public IActionResult AddAnnouncement(string name, DateTime date, string location, string description, string author)
-        {
-            //add logic
-            return View("LocalEventsAndAnnouncements");
         }
 
         [HttpPost]

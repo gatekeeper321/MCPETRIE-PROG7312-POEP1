@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -7,10 +8,19 @@ namespace PROG7312.Services
 {
     public class EAService
     {
+        //dictionaries
         public Dictionary<string, Event> Events { get; set; } = new Dictionary<string, Event>();
-        public Stack<string> RecentlyViewed { get; set; } = new Stack<string>(); // stack to store recently viewed events
+        public Stack<string> RecentlyViewed { get; set; } = new Stack<string>(); // stack to store viewed events so that most recent ones can be shown to user
+
+
+        //hash sets
         HashSet<string> Categories = new HashSet<string>(); // hashset to store categories of events
         HashSet<DateTime> Dates = new HashSet<DateTime>(); // hashset to store dates of events
+
+        //Dictionaries for algorithm
+        Dictionary<string, int> CatCount = new Dictionary<string, int>(); // using dictionary to count category searches, this will then be used to create recomendations
+        Dictionary<string, int> DatCount = new Dictionary<string, int>(); // using dictionary to count date searches, this will then be used to create recomendations
+
 
         public Dictionary<string, Announcement> Announcements { get; set; } = new Dictionary<string, Announcement>();
         public PriorityQueue<Announcement, int> AnnQueue { get; set; } = new PriorityQueue<Announcement, int>(); // priority queue to sort announcements using their priority so higher priority announcements will be shown first to users (not used but i have left it in just in case i want to use it in part 3)
@@ -42,7 +52,7 @@ namespace PROG7312.Services
 
         public EAService()
         {
-            //sample data
+            // sample data //////////////////////////////////////////////////////////
 
             Events.Add("E00001", new Event { Id = "E00001", Name = "Claremont LAN", Date = new DateTime(2025, 10, 15, 20, 00, 00), Location = "Office B21, Claremont Warehouse", Category = "Gaming", Description = "Come and enjoy a LAN filled with locals for only R300 per person. Play any game with a friends or a bunch of like-minded people you meet at the event", AdmissionFee = 300.00, Author = "Will Mcpetrie"});
             Events.Add("E00002", new Event { Id = "E00002", Name = "SPCA Fund-raiser", Date = new DateTime(2025, 10, 29, 9, 30, 00), Location = "Greenpoint Promenade", Category = "Charity", Description = "The SPCA will be hosting a Fund-raiser event on the Greenpoint Promenade to raise funds for the care and housing of many shelter animals. The SPCA will be bringing dogs that will also be up for adoption if anyone will be interested. There will be no admission fee however they do request that both attendees and those not attending find it in their hearts to help their cause by iether donating funds or adopting an animal in need (or both)!", AdmissionFee = 0, Author = "President of SPCA" });
@@ -61,13 +71,14 @@ namespace PROG7312.Services
             Announcements.Add("A00002", new Announcement { Id = "A00002", Name = "Protesting", Date = new DateTime(2025, 11, 2, 9, 00, 00), Location = "Throughout Cape Town CBD", Description = "We have been informed of a string of peaceful protests that will occur through the Cape Town CBD on November 2nd. Please remember this for your travels as several loads may close due to this.", Author = "Mayor Geordan Hill-Lewis", Priority = 4 });
 
             ///////////////////////////////////////////////////////////////////////
-
+            
+            //adding categoriees to hash set, this will be automated in part 3 when certain users can add events
             Categories.Add("Gaming");
             Categories.Add("Charity");
             Categories.Add("Concert");
             Categories.Add("Racing");
             Categories.Add("Outdoors");
-
+            //adding Dates to hash set, this will be automated in part 3 when certain users can add events
             Dates.Add(new DateTime(2025, 10, 15).Date);
             Dates.Add(new DateTime(2025, 10, 29).Date);
             Dates.Add(new DateTime(2025, 12, 23).Date);
@@ -81,14 +92,21 @@ namespace PROG7312.Services
             Dates.Add(new DateTime(2025, 11, 15).Date);
             Dates.Add(new DateTime(2026, 2, 17).Date);
 
-            AnnQueue.Enqueue(Announcements["A00001"], Announcements["A00001"].Priority);
-            AnnQueue.Enqueue(Announcements["A00002"], Announcements["A00002"].Priority);
         }
 
         public List<Event> CategorySearch(string searched)
         {
             if (Categories.Contains(searched))
             {
+                if (CatCount.ContainsKey(searched))
+                {
+                    CatCount[searched]++; //adds 1 to the count if the searched category exists
+                }
+                else
+                {
+                    CatCount[searched] = 1; //creates new entry if there isnt already one in dictionary
+                }
+
                 return (Events.Values.Where(e => e.Category == searched).ToList());
             }
             else
@@ -103,6 +121,15 @@ namespace PROG7312.Services
 
             if (Dates.Contains(dateOnly))
             {
+                if (DatCount.ContainsKey(searched))
+                {
+                    DatCount[searched]++; //adds 1 to the count if the searched date exists
+                }
+                else
+                {
+                    DatCount[searched] = 1; //creates new entry if there isnt already one in dictionary
+                }
+
                 return (Events.Values.Where(e => e.Date.Date == dateOnly).ToList()); // DateTime is also made into date only for comparison to string searched
             }
             else
@@ -111,7 +138,31 @@ namespace PROG7312.Services
             }
         }
 
+        public List<Event> Recommendations()
+        {
 
+            if (CatCount.Count == 0 && DatCount.Count == 0) //if no searches have been made yet this return 3 random events
+            {
+                return Events.Values.Take(3).ToList();
+            }
 
+            //getting most searched category and date to know which ones to recommend
+            var RecCat = CatCount.OrderByDescending(c => c.Value).Select(c => c.Key).FirstOrDefault(); //ordering by most serached to least searched and selecting most searched category
+
+            var RecDat = DatCount.OrderByDescending(c => c.Value).Select(c => c.Key).FirstOrDefault(); //ordering by most serached to least searched and selecting most searched date
+            var dateOnly = DateTime.Parse(RecDat).Date;
+
+            int CategoryCount = CatCount.OrderByDescending(c => c.Value).Select(c => c.Value).FirstOrDefault(); ;
+            int DateCount = DatCount.OrderByDescending(c => c.Value).Select(c => c.Value).FirstOrDefault();
+
+            if (CategoryCount >= DateCount)
+            {
+                return Events.Values.Where(e => e.Category == RecCat).Take(3).ToList(); //returning 3 events of the most searched category
+            } 
+            else
+            {
+                return Events.Values.Where(e => e.Date.Date == dateOnly).Take(3).ToList(); //returning 3 events of the most searched dates
+            }
+        }
     }
 }

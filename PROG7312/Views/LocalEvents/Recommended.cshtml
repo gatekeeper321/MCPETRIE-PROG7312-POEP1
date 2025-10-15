@@ -1,0 +1,24 @@
+﻿@using PROG7312.Services
+@model List<EAService.Event>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="cardbox w-100">
+
+    <div class="card w-100">
+        <h3>Recommended Events Based On your History</h3>
+    </div>
+
+    @foreach (var e in Model)
+    {
+        <div class="cardlink w-40" onclick="window.location.href='/LocalEvents/EventView?Id=@e.Id'">
+            <h5>@e.Name</h5>
+            <p>Location: @e.Location</p>
+            <p>Date: @e.Date.ToString("dd MMM yyyy HH:mm")</p>
+            <p>Price: R @e.AdmissionFee</p>
+        </div>
+    }
+</div>
