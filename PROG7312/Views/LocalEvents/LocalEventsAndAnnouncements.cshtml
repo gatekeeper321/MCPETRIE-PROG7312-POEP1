@@ -1,52 +1,81 @@
 ﻿@using PROG7312.Services
+@using System.Linq
 @{
     ViewData["Title"] = "Local Events & Announcements";
 
-    EAService easervice = new EAService();
-    var Events = easervice.Events;
-    var Announcements = easervice.Announcements;
+    var Events = Model.Events;
+    var Announcements = Model.Announcements;
 }
+<div class="cardbox !w-100">
 
-<div class="cardboxhzntl">
-
-    <div class="cardbox mr-0 mt-0 w-100">
-
-        <div class="card w-100">
-            <h3>Announcements</h3>
-        </div>
-
-        <!--foreach to add every announcement as a card-->
-        @foreach (var a in Announcements.Values)
-        {
-            <div class="card w-100">
-                <h5>@a.Name</h5>
-                <p>@a.Description</p>
-                <hr>
-                <p>Location: @a.Location</p>
-                <p>Date: @a.Date.ToString("dd MMM yyyy HH:mm")</p>
-                <p>@a.Author</p>
-            </div>
-        }
+    <div class="card w-full">
+        <h2>Local Events & Announcements</h2>
+        <p>Stay informed of all local events and announcements in your city</p>
     </div>
-    
-    <div class="cardbox mr-0 mt-0 w-100">
 
-        <div class="card w-100">
-            <h3>Local Events</h3>
-        </div>
+    <hr>
 
-        <!--foreach to add every event as a card-->
-        @foreach (var e in Events.Values) 
+    <div class="card !w-100">
+        <h3>Recently Viewed Events</h3>
+    </div>
+
+    <div class="cardboxhzntl mt-0 w-100">
+        <!--foreach to add up to 3 max events, all in order of when you last viewed them-->
+        @foreach (var id in ((IEnumerable<string>)Model.RecentlyViewed).Take(3))
         {
-            <div class="card w-100">
+            var e = Model.Events[id];
+            <div class="cardlink !w-32" onclick="window.location.href='/LocalEvents/EventView?Id=@e.Id'">
                 <h5>@e.Name</h5>
-                <p>@e.Description</p>
-                <hr>
                 <p>Location: @e.Location</p>
                 <p>Date: @e.Date.ToString("dd MMM yyyy HH:mm")</p>
                 <p>Price: R @e.AdmissionFee</p>
-                <p>@e.Author</p>
             </div>
         }
     </div>
+
+    <hr>
+
+    <div class="cardboxhzntl mt-0">
+
+        <div class="cardbox mr-0 mt-0 w-100">
+
+            <div class="card w-100">
+                <h3>Announcements</h3>
+            </div>
+
+            <!--foreach to add every announcement as a card-->
+            @foreach (var a in Announcements.Values)
+            {
+                <div class="card w-100">
+                    <h5>@a.Name</h5>
+                    <p>@a.Description</p>
+                    <hr>
+                    <p>Location: @a.Location</p>
+                    <p>Date: @a.Date.ToString("dd MMM yyyy HH:mm")</p>
+                    <p>@a.Author</p>
+                </div>
+            }
+        </div>
+
+        <div class="cardbox mr-0 mt-0 w-100">
+
+            <div class="card w-100">
+                <h3>Local Events</h3>
+            </div>
+
+            <!--foreach to add every event as a card-->
+            @foreach (var e in Events.Values)
+            {
+                <div class="cardlink w-100" onclick="window.location.href='/LocalEvents/EventView?Id=@e.Id'">
+                    <h5>@e.Name</h5>
+                    <p>Location: @e.Location</p>
+                    <p>Date: @e.Date.ToString("dd MMM yyyy HH:mm")</p>
+                    <p>Price: R @e.AdmissionFee</p>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
+
+

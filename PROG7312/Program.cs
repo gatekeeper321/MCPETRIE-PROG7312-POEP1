@@ -1,7 +1,10 @@
+using PROG7312.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<EAService>();
 
 var app = builder.Build();
 

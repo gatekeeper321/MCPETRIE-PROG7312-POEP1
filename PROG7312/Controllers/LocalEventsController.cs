@@ -1,22 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PROG7312.Models;
 using System.Diagnostics;
+using static PROG7312.Services.EAService;
 using PROG7312.Services;
+using AspNetCoreGeneratedDocument;
 
 namespace PROG7312.Controllers
 {
     public class LocalEventsController : Controller
     {
         private readonly ILogger<LocalEventsController> _logger;
+        private readonly EAService _eaService;
 
-        public LocalEventsController(ILogger<LocalEventsController> logger)
+        public LocalEventsController(ILogger<LocalEventsController> logger, EAService eaService)
         {
             _logger = logger;
+            _eaService = eaService;
         }
 
         public IActionResult LocalEventsAndAnnouncements()
         {
-            return View();
+            return View(_eaService);
+        }
+
+        public IActionResult EventView(string Id)
+        {
+            Event e = _eaService.Events[Id];
+
+            _eaService.RecentlyViewed.Push(Id); //Adding most recently viewed event which would be id, to the stack, so i can create a recently viewed section
+
+            return View(e);
         }
 
         public IActionResult CreateEvent()

@@ -1,0 +1,35 @@
+﻿@using PROG7312.Services
+@model EAService.Event
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="cardbox">
+    <div class="card">
+
+        <h3>@Model.Name</h3>
+
+        <hr>
+
+        <p>Admission Fee: R @Model.AdmissionFee</p>
+        <p>Category: @Model.Category</p>
+
+        <hr>
+
+        <p>@Model.Description</p>
+
+        <hr>
+
+        <p>Location: @Model.Location</p>
+        <p>Date: @Model.Date.ToString("dd MMM yyyy")</p>
+        <p>Time: @Model.Date.ToString("HH:mm")</p>
+        <p>Posted By: @Model.Author</p>
+
+        <hr>
+
+    </div>
+
+    <div class="cardlink w-10" onclick="window.location.href='/LocalEvents/LocalEventsAndAnnouncements'">
+        Back
+    </div>
+</div>
