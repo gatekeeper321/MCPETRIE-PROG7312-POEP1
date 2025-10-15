@@ -1,0 +1,52 @@
+﻿@using PROG7312.Services
+@{
+    ViewData["Title"] = "Local Events & Announcements";
+
+    EAService easervice = new EAService();
+    var Events = easervice.Events;
+    var Announcements = easervice.Announcements;
+}
+
+<div class="cardboxhzntl">
+
+    <div class="cardbox mr-0 mt-0 w-100">
+
+        <div class="card w-100">
+            <h3>Announcements</h3>
+        </div>
+
+        <!--foreach to add every announcement as a card-->
+        @foreach (var a in Announcements.Values)
+        {
+            <div class="card w-100">
+                <h5>@a.Name</h5>
+                <p>@a.Description</p>
+                <hr>
+                <p>Location: @a.Location</p>
+                <p>Date: @a.Date.ToString("dd MMM yyyy HH:mm")</p>
+                <p>@a.Author</p>
+            </div>
+        }
+    </div>
+    
+    <div class="cardbox mr-0 mt-0 w-100">
+
+        <div class="card w-100">
+            <h3>Local Events</h3>
+        </div>
+
+        <!--foreach to add every event as a card-->
+        @foreach (var e in Events.Values) 
+        {
+            <div class="card w-100">
+                <h5>@e.Name</h5>
+                <p>@e.Description</p>
+                <hr>
+                <p>Location: @e.Location</p>
+                <p>Date: @e.Date.ToString("dd MMM yyyy HH:mm")</p>
+                <p>Price: R @e.AdmissionFee</p>
+                <p>@e.Author</p>
+            </div>
+        }
+    </div>
+</div>
