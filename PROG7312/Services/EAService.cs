@@ -12,7 +12,6 @@ namespace PROG7312.Services
         public Dictionary<string, Event> Events { get; set; } = new Dictionary<string, Event>();
         public Stack<string> RecentlyViewed { get; set; } = new Stack<string>(); // stack to store viewed events so that most recent ones can be shown to user
 
-
         //hash sets
         HashSet<string> Categories = new HashSet<string>(); // hashset to store categories of events
         HashSet<DateTime> Dates = new HashSet<DateTime>(); // hashset to store dates of events
@@ -35,7 +34,6 @@ namespace PROG7312.Services
             public string Description { get; set; }
             public string Author { get; set; }
             public int Priority { get; set; }
-
         }
 
         public class Event

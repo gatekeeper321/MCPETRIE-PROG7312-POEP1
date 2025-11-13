@@ -1,0 +1,32 @@
+﻿@using PROG7312.ViewModels
+@model ServiceRequestViewModel
+@{
+    ViewData["Title"] = "";
+}
+<div class="cardbox w-100">
+
+    <div class="card w-100">
+        <h2>All Reports</h2>
+        <p>All Reports from all Users</p>
+    </div>
+
+    <div class="cardbox mr-0 mt-0 w-100">
+        <!--foreach to add every announcement as a card-->
+        @if (Model.Reports != null)
+        {
+            @foreach (var r in Model.Reports)
+            {
+                <div class="card w-100">
+                    <p>@r.ReportID</p>
+                    <p>@r.FirstName</p>
+                    <p>@r.LastName</p>
+                    <p>@r.Category</p>
+                    <p>@r.Location</p>
+                    <p>@r.Description</p>
+                    <p>@r.Status</p>
+                </div>
+            }
+        }
+    </div>
+
+</div>

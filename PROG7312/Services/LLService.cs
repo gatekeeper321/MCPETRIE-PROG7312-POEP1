@@ -4,21 +4,26 @@ namespace PROG7312.Services
 {
     public class ReportNode
     {
+        private static int NextID = 1;
+        public int ReportID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Category { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
+        public string Status { get; set; }
         public IFormFile ReportImage { get; set; }
         public ReportNode Next { get; set; } // Next points to the next node in the list, allowing for the lists to be linked together via nodes instead of with indexes
 
-        public ReportNode(string firstName, string lastName, string category, string location, string description, IFormFile reportImage)
+        public ReportNode(string firstName, string lastName, string category, string location, string description, string status, IFormFile reportImage)
         {
+            ReportID = NextID++;
             FirstName = firstName;
             LastName = lastName;
             Category = category;
             Location = location;
             Description = description;
+            Status = status;
             ReportImage = reportImage;
             Next = null;
         }
@@ -47,7 +52,7 @@ namespace PROG7312.Services
                 Tail = newNode; //making the new node the tail
             }
 
-            Console.WriteLine("New report added: " + newNode.FirstName + " " + newNode.LastName + " " + newNode.Category + " " + newNode.Location + " " + newNode.Description); //console msg to verify data has been added to linked list
+            Console.WriteLine("New report added: " + newNode.ReportID + " " + newNode.FirstName + " " + newNode.LastName + " " + newNode.Category + " " + newNode.Location + " " + newNode.Description); //console msg to verify data has been added to linked list
         }
     }
 }

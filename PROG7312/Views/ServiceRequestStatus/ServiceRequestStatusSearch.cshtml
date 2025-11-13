@@ -1,0 +1,72 @@
+﻿@using PROG7312.ViewModels
+@model ServiceRequestViewModel
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="cardbox">
+
+    <div class="card w-100">
+        <h3>Find Service Request Status</h3>
+    </div>
+
+    <div class="cardboxhzntl w-100 mt-0 mb-5">
+        <form asp-controller="ServiceRequestStatus" asp-action="GetReport" class="card w-80 mb-0">
+            <h6>Enter you request's ID to view it as well as its status</h6>
+            <!--pattern requires users to only enter digits from 0 to 9, user can enter letters but will be told to correct it upon submission-->
+            <input type="number" name="ReportID" placeholder="1011" pattern="[0-9]+"/>
+            <button type="submit" class="mb-0">Search</button>
+        </form>
+    </div>
+
+
+    @if (Model?.SearchedReport != null)
+    {
+        <!-- Entered report details populate here-->
+        <div class="cardlink w-40">
+            <h5>@Model.SearchedReport.ReportID</h5>
+            <p>Reporter: @Model.SearchedReport.LastName, @Model.SearchedReport.FirstName</p>
+            <p>Department Concerned: @Model.SearchedReport.Category</p>
+            <p>Location: @Model.SearchedReport.Location</p>
+            <p>Description of Report:</p>
+            <p>@Model.SearchedReport.Description</p>
+            <hr>
+            <p>Status of Report: @Model.SearchedReport.Status</p>
+        </div>
+    }
+    else
+    {
+        <div class="card w-40">
+            <p>No report with that ID on the system, if this is an error please contact us as soon as possible!</p>
+        </div>
+    } 
+
+    <div class="card w-100">
+        <h4>Dependencies for Searched Report</h4>
+    </div>
+
+    @if (Model?.Dependencies == null)
+    {
+        <div class="card w-40">
+            <p>Report has dependencies, this report will be addressed next in your area</p>
+        </div>
+    }
+
+    @if (Model?.Dependencies != null)
+    {
+        @foreach (var d in Model.Dependencies)
+        {
+            <div class="cardlink w-40">
+                <h5>@d.ReportID</h5>
+                <p>Reporter: @d.LastName, @d.FirstName</p>
+                <p>Department Concerned: @d.Category</p>
+                <p>Location: @d.Location</p>
+                <p>Description of Report:</p>
+                <p>@d.Description</p>
+                <hr>
+                <p>Status of Report: @d.Status</p>
+            </div>
+        }
+
+    }
+</div>

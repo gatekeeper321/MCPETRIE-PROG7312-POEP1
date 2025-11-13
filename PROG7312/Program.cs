@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<EAService>();
+builder.Services.AddSingleton<RequestStatusService>();
+builder.Services.AddSingleton<BinarySearchTree>();
+builder.Services.AddSingleton<Graph>();
 
 var app = builder.Build();
 
